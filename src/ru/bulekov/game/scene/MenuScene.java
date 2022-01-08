@@ -10,9 +10,13 @@ public class MenuScene extends Scene{
 
     private final List<GameObject> gameObjects;
 
-    public MenuScene(String name, Game game) {
-        super(name, game);
+    public MenuScene(String name) {
+        super(name);
         gameObjects = new ArrayList<>();
+    }
+
+    public void init(Game game){
+        super.init(game);
     }
 
     @Override

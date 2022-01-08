@@ -1,29 +1,40 @@
 package ru.bulekov.game.geometry;
 
 public class Position {
-    float x, y;
+
+    private Vector2 positionVector2;
+
     float centerX, centerY;
     float worldX, worldY;
     int gridX, gridY;
 
-    public Position(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public Position(){
+        this(new Vector2(0,0));
+    }
+
+    public Position(Vector2 positionVector2) {
+        this.positionVector2 = positionVector2;
     }
 
     public float getX() {
-        return x;
+        return positionVector2.getX();
     }
 
     public void setX(float x) {
-        this.x = x;
+        this.positionVector2.setX(x);
     }
 
     public float getY() {
-        return y;
+        return this.positionVector2.getY();
     }
 
     public void setY(float y) {
-        this.y = y;
+        this.positionVector2.setY(y);
+    }
+
+    public float distance(Position position) {
+        float dX = position.getX() - this.positionVector2.getX();
+        float dY = position.getY() - this.positionVector2.getY();
+        return (float) Math.sqrt(dX * dX + dY * dY);
     }
 }

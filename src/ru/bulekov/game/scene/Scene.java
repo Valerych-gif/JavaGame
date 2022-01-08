@@ -14,15 +14,13 @@ public abstract class Scene {
     public static final int MENU = 0;
     public static final int GAME = 1;
     protected String name;
+    protected Game game;
     protected MainRenderer renderer;
     protected DebugRenderer debugRenderer;
     protected Canvas canvas;
 
-    public Scene(String name, Game game) {
+    public Scene(String name) {
         this.name = name;
-        this.renderer = game.getRenderer();
-        this.debugRenderer = game.getDebugRenderer();
-        getGraphics();
     }
 
     private void getGraphics() {
@@ -39,6 +37,13 @@ public abstract class Scene {
     public abstract List<GameObject> getGameObjects();
 
     public GameKeyListener getKeyListener() {
-        return renderer.getKeyListener();
+        return game.getKeyListener();
+    }
+
+    public void init(Game game) {
+        this.game = game;
+        this.renderer = game.getRenderer();
+        this.debugRenderer = game.getDebugRenderer();
+        getGraphics();
     }
 }

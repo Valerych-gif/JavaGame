@@ -17,12 +17,14 @@ public class Vector2 {
     public void add(Vector2 vector2) {
         this.x += vector2.getX();
         this.y += vector2.getY();
+        this.length = (float) Math.sqrt(x * x + y * y);
     }
 
     public Vector2 normalize() {
         Vector2 normalizedVector2 = new Vector2(x, y);
         normalizedVector2.setX(x / length);
         normalizedVector2.setY(y / length);
+        normalizedVector2.setLength(1f);
 
         return normalizedVector2;
     }
@@ -49,5 +51,11 @@ public class Vector2 {
 
     public void setLength(float length) {
         this.length = length;
+    }
+
+    public void sub(Vector2 vector2) {
+        this.x -= vector2.getX();
+        this.y -= vector2.getY();
+        this.length = (float) Math.sqrt(x * x + y * y);
     }
 }

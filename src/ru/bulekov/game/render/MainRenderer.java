@@ -12,29 +12,34 @@ import java.awt.image.BufferStrategy;
 import java.util.List;
 
 import static ru.bulekov.game.constants.GameConstants.TITLE;
+import static ru.bulekov.game.constants.GameConstants.debugMode;
 
 
 public class MainRenderer extends JFrame {
 
-    private final Canvas canvas;
+    private Canvas canvas;
     private List<GameObject> gameObjects;
-    private final Game game;
-    private final GameKeyListener keyListener;
+    private Game game;
+    private GameKeyListener keyListener;
     private Scene scene;
 
-    public MainRenderer(Game game){
-        this.game = game;
+    public MainRenderer(){
 
+    }
+
+    public void init(Game game) {
+        this.game = game;
         int width = game.getWidth();
         int height = game.getHeight();
         this.scene = game.getScene();
+        this.gameObjects = scene.getGameObjects();
         this.keyListener = game.getKeyListener();
 
         setTitle(TITLE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        canvas = new Canvas();
+        this.canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
         canvas.setFocusable(true);
 
@@ -60,7 +65,7 @@ public class MainRenderer extends JFrame {
 
         gameObjects.forEach(gameObject -> gameObject.render(graphics));
 
-        if (keyListener.getKeySwitchedOn()[KeyEvent.VK_T]){
+        if (keyListener.getKeySwitchedOn()[KeyEvent.VK_T] || debugMode){
             gameObjects.forEach(gameObject -> gameObject.debugRender(graphics));
         }
 

@@ -1,6 +1,7 @@
 package ru.bulekov.game.core;
 
 import ru.bulekov.game.input.GameKeyListener;
+import ru.bulekov.game.physic.CollisionsHandler;
 import ru.bulekov.game.render.DebugRenderer;
 import ru.bulekov.game.render.MainRenderer;
 import ru.bulekov.game.scene.GameScene;
@@ -12,8 +13,8 @@ public class Game {
     private final MainRenderer renderer;
     private final DebugRenderer debugRenderer;
     private final GameKeyListener keyListener;
-
     private final Scene gameScene, menuScene;
+    private final CollisionsHandler collisionsHandler;
 
     private final int width;
     private final int height;
@@ -21,13 +22,24 @@ public class Game {
     public Game(int width, int height) {
         this.width = width;
         this.height = height;
-        keyListener = new GameKeyListener();
-        this.renderer = new MainRenderer(this);
-        this.debugRenderer = new DebugRenderer(this);
-        gameScene = new GameScene("GameScene", this);
-        menuScene = new MenuScene("MenuScene", this);
+        this.keyListener = new GameKeyListener();
+        this.renderer = new MainRenderer();
+        this.debugRenderer = new DebugRenderer();
+        this.collisionsHandler = new CollisionsHandler();
+        this.gameScene = new GameScene("GameScene");
+        this.menuScene = new MenuScene("MenuScene");
         this.scene = gameScene;
         renderer.setScene(scene);
+        init();
+    }
+
+    private void init() {
+        keyListener.init();
+        gameScene.init(this);
+        menuScene.init(this);
+        renderer.init(this);
+        debugRenderer.init(this);
+        collisionsHandler.init(this);
     }
 
 
@@ -75,5 +87,9 @@ public class Game {
 
     public GameKeyListener getKeyListener() {
         return keyListener;
+    }
+
+    public CollisionsHandler getCollisionsHandler() {
+        return collisionsHandler;
     }
 }

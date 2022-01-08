@@ -31,4 +31,7 @@ public class GameKeyListener implements KeyListener {
     public boolean[] getKeySwitchedOn() {
         return keySwitched;
     }
+
+    public void init() {
+    }
 }

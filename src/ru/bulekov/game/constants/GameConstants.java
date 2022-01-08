@@ -14,5 +14,7 @@ public interface GameConstants {
     double UPS = 240d;
     double USPS = 1d;
 
-    Force gravity = new Force("Gravity", new Vector2(0f, 1f), 0.9f);
+    Force gravity = new Force("Gravity", new Vector2(0f, 0.9f));
+
+    boolean debugMode = true;
 }

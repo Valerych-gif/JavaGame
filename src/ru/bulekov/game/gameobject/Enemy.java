@@ -1,7 +1,7 @@
 package ru.bulekov.game.gameobject;
 
 import ru.bulekov.game.geometry.Position;
-import ru.bulekov.game.physic.BoxCollider;
+import ru.bulekov.game.physic.CircleCollider;
 import ru.bulekov.game.physic.Collider;
 import ru.bulekov.game.scene.Scene;
 
@@ -11,25 +11,25 @@ import static ru.bulekov.game.constants.GameConstants.SPRITE_SIZE;
 
 public class Enemy extends GameObject{
 
-    private Position position;
+    public Enemy(String name, Scene scene) {
+        super(name, scene);
+        this.position = new Position();
+        this.weight = 100.0f;
 
-    public Enemy(Scene scene) {
-        super("Enemy");
-        this.position = new Position(100, 100);
-
-        Collider mainCollider = new BoxCollider("EnemyMainCollider", position, SPRITE_SIZE, SPRITE_SIZE);
+        Collider mainCollider = new CircleCollider("EnemyMainCollider", position, SPRITE_SIZE,this);
         colliders.put(mainCollider.getName(), mainCollider);
     }
 
     @Override
     public void update(float dt) {
-
+        super.update(dt);
+        state.update(this, dt);
+        colliders.get("EnemyMainCollider").setPosition(position);
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect((int) position.getX(), (int) position.getY(), SPRITE_SIZE, SPRITE_SIZE);
+        state.render(this, g);
     }
 
     @Override

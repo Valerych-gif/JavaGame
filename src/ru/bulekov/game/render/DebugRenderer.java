@@ -4,12 +4,16 @@ import ru.bulekov.game.core.Game;
 
 public class DebugRenderer {
 
-    private final Game game;
+    private Game game;
 
-    public DebugRenderer(Game game) {
-        this.game = game;
+    public DebugRenderer() {
+
     }
 
     public void render() {
+    }
+
+    public void init(Game game) {
+        this.game = game;
     }
 }
