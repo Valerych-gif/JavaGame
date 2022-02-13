@@ -12,6 +12,7 @@ public class Velocity {
 
     public Velocity(Vector2 velocityVector2) {
         this.velocityVector2 = velocityVector2;
+        this.velocityVector2.setY(this.velocityVector2.getY());
     }
 
     public Vector2 getVelocityVector2() {
@@ -20,6 +21,7 @@ public class Velocity {
 
     public void setVelocityVector2(Vector2 velocityVector2) {
         this.velocityVector2 = velocityVector2;
+        this.velocityVector2.setY(this.velocityVector2.getY());
     }
 
     public float getX(){

@@ -9,12 +9,13 @@ public class Force {
 
     public Force() {
         this.name = "";
-        this.forceVector2 = new Vector2();
+        this.forceVector2 = new Vector2(0, 0);
     }
 
     public Force(String name, Vector2 forceVector2) {
         this.name = name;
         this.forceVector2 = forceVector2;
+        this.forceVector2.setY(this.forceVector2.getY());
     }
 
     public String getName() {
@@ -31,6 +32,7 @@ public class Force {
 
     public void setForceVector2(Vector2 forceVector2) {
         this.forceVector2 = forceVector2;
+        this.forceVector2.setY(this.forceVector2.getY());
     }
 
     public void add(Force force) {

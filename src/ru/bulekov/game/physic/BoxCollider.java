@@ -27,7 +27,7 @@ public class BoxCollider extends Collider{
     }
 
     @Override
-    public void collide(Collider other) {
+    public void checkCollide(Collider other) {
         System.out.println(other.getName());
     }
 

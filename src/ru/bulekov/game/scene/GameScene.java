@@ -30,20 +30,12 @@ public class GameScene extends Scene {
         gameObjects = new ArrayList<>();
 
         Enemy enemy = new Enemy("Enemy", this);
-        enemy.setPosition(new Position(new Vector2(100, 100)));
+        enemy.setPosition(new Position(new Vector2(100, 500)));
         gameObjects.add(enemy);
 
-        Enemy enemy1 = new Enemy("Enemy1", this);
-        enemy1.setPosition(new Position(new Vector2(200, 100)));
-        gameObjects.add(enemy1);
-
         Player player = new Player(this);
-        player.setPosition(new Position(new Vector2(300, 100)));
+        player.setPosition(new Position(new Vector2(300, 500)));
         gameObjects.add(player);
-
-        Player player2 = new Player(this);
-        player2.setPosition(new Position(new Vector2(400, 100)));
-        gameObjects.add(player2);
 
     }
 
@@ -53,7 +45,6 @@ public class GameScene extends Scene {
             game.setScene(Scene.MENU);
         }
         getGameObjects().forEach(gameObject -> gameObject.update(dt));
-//        collisionsHandler.checkCollides();
     }
 
     @Override

@@ -5,43 +5,69 @@ import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;
 import ru.bulekov.game.physic.Acceleration;
 import ru.bulekov.game.physic.Velocity;
+import ru.bulekov.game.render.Animation;
+
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
-import static ru.bulekov.game.gameobject.state.States.*;
+import static ru.bulekov.game.constants.GameConstants.WINDOW_HEIGHT;
 
 public abstract class State {
 
-    public static final int JUMP = 0;
-    public static final int WALK = 1;
-    public static final int STOP = 2;
-    public static final int TURN_RIGHT = 3;
-    public static final int TURN_LEFT = 4;
-    public static final int FALL = 5;
-    public static final int GROUND_TOUCH = 6;
+    protected final GameObject gameObject;
+    protected Image image;
+    protected Animation animation;
+    private int frameNumber;
+    protected long frameDuration;
+    protected List<BufferedImage> frames;
+    private long lastFrameTimestamp;
 
-
-    public State() {
-
+    public State(GameObject gameObject) {
+        this.gameObject = gameObject;
+        this.animation = gameObject.getAnimation();
+        this.frames = animation.getFrames();
+        this.frameDuration = 1_000 / animation.getFramesPerSecond();
+        this.lastFrameTimestamp = System.currentTimeMillis();
     }
 
-    protected void setPosition(GameObject gameObject){
-        Vector2 forceVector2 = gameObject.getForce().getForceVector2();
+    protected void physicCalculate() {
+        gameObject.setAcceleration(getAcceleration());
+        setVelocity();
+        setPosition();
+    }
 
-        Acceleration acceleration = new Acceleration(new Vector2(forceVector2.getX() / gameObject.getWeight(), forceVector2.getY() / gameObject.getWeight()));
-
-        Velocity velocityChange = new Velocity(acceleration.getAccelerationVector());
-        gameObject.getVelocity().add(velocityChange);
+    private void setPosition() {
         Velocity velocity = gameObject.getVelocity();
-
         Position position = gameObject.getPosition();
-        position.setX(position.getX() + velocity.getX());
-        position.setY(position.getY() + velocity.getY());
+        float velocityX = velocity.getX();
+        float velocityY = velocity.getY();
+        position.setX(position.getX() + velocityX);
+        position.setY(position.getY() + velocityY);
     }
 
-    public abstract void update(GameObject gameObject, float dt);
-    public abstract void changeState(GameObject gameObject, int action);
-    public abstract void render(GameObject gameObject, Graphics g);
+    private void setVelocity() {
+        Velocity velocityChange = new Velocity(gameObject.getAcceleration().getAccelerationVector());
+        gameObject.getVelocity().add(velocityChange);
+    }
+
+    private Acceleration getAcceleration() {
+        Vector2 forceVector2 = gameObject.getForce().getForceVector2();
+        return new Acceleration(new Vector2(forceVector2.getX() / gameObject.getWeight(), forceVector2.getY() / gameObject.getWeight()));
+    }
+
+    public abstract void update(float dt);
+
+    public void render(Graphics g) {
+        long currentTimestamp = System.currentTimeMillis();
+        long delta = currentTimestamp - lastFrameTimestamp;
+        if (delta > frameDuration) {
+            lastFrameTimestamp = currentTimestamp;
+            frameNumber++;
+            if (frameNumber >= frames.size()) frameNumber = 0;
+        }
+        g.drawImage(frames.get(frameNumber), (int) gameObject.getPosition().getX(), WINDOW_HEIGHT - (int) gameObject.getPosition().getY(), null);
+        gameObject.debugRender(g);
+    }
 }

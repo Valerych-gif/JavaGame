@@ -19,7 +19,7 @@ public abstract class Collider {
 
 
     public abstract void render(Graphics g);
-    public abstract void collide(Collider other);
+    public abstract void checkCollide(Collider other);
 
     public GameObject getGameObject() {
         return gameObject;
@@ -39,5 +39,9 @@ public abstract class Collider {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void react(Collider other) {
+//        System.out.println(this.getName());
     }
 }
