@@ -1,6 +1,5 @@
 package ru.bulekov.game.gameobject;
 
-import ru.bulekov.game.gameobject.state.FallingRightState;
 import ru.bulekov.game.gameobject.state.State;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;

@@ -1,5 +1,6 @@
 package ru.bulekov.game.gameobject;
 
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.state.*;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.physic.CircleCollider;
@@ -9,17 +10,14 @@ import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
 
-import static ru.bulekov.game.constants.GameConstants.SPRITE_SIZE;
-
 public class Enemy extends GameObject{
-
-    private final String ANIMATION_FILE = "C:\\Repo\\JavaGame\\data\\assets\\images\\tank.json";
 
     public Enemy(String name, Scene scene) {
         super(name, scene);
         this.position = new Position();
         this.weight = 100.0f;
-        this.movingRightAnimation = new Animation("moving_right.png", ANIMATION_FILE, 5, 5);
+        String ANIMATION_FILE = (String) Settings.getValue("enemy_animations");
+        this.movingRightAnimation = new Animation("standing_right.png", ANIMATION_FILE, 1, 5);
 
         this.animation = movingRightAnimation;
 
@@ -34,7 +32,7 @@ public class Enemy extends GameObject{
 
         this.state = new FallingRightState(this);
 
-        Collider mainCollider = new CircleCollider("EnemyMainCollider", position, SPRITE_SIZE,this);
+        Collider mainCollider = new CircleCollider("EnemyMainCollider", position, (int) Settings.getValue("enemy_sprite_size"),this);
         colliders.put(mainCollider.getName(), mainCollider);
     }
 

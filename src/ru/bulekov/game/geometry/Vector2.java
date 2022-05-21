@@ -1,7 +1,5 @@
 package ru.bulekov.game.geometry;
 
-import static ru.bulekov.game.constants.GameConstants.WINDOW_HEIGHT;
-
 public class Vector2 {
     private float x, y;
 

@@ -6,7 +6,7 @@ import ru.bulekov.game.physic.Force;
 
 import java.awt.*;
 
-import static ru.bulekov.game.constants.GameConstants.accuracy;
+import static ru.bulekov.game.config.GameConstants.accuracy;
 
 public class MovingRightState extends State {
 

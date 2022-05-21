@@ -1,0 +1,14 @@
+{
+  "TITLE": "Game",
+  "WINDOW_WIDTH": 1024,
+  "WINDOW_HEIGHT": 720,
+  "FPS": 60,
+  "UPS": 240,
+  "USPS": 1,
+  "gravity": 0.9,
+  "asset_path": "data/assets/",
+  "player_desc": "player",
+  "enemy_desc": "enemy",
+  "player_sprite_size": 64,
+  "enemy_sprite_size": 64
+}

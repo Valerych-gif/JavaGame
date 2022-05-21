@@ -1,37 +1,43 @@
 package ru.bulekov.game.gameobject.player;
 
+import ru.bulekov.game.asset.GameObjectDescriptionHandler;
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.gameobject.state.*;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.input.GameKeyListener;
 import ru.bulekov.game.physic.CircleCollider;
 import ru.bulekov.game.physic.Collider;
-import ru.bulekov.game.render.Animation;
 import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static ru.bulekov.game.constants.GameConstants.SPRITE_SIZE;
-import static ru.bulekov.game.constants.GameConstants.debugMode;
+import static ru.bulekov.game.config.GameConstants.debugMode;
 
 public class Player extends GameObject {
 
-    private final String ANIMATION_FILE = "C:\\Repo\\JavaGame\\data\\assets\\images\\tank.json";
-
+    private PlayerDescription description;
     private final GameKeyListener keyListener;
 
     public Player(Scene scene) {
+
         super("Player", scene);
         this.position = new Position();
-        this.weight = 100.0f;
-        this.maxSpeed = 1.5f;
-
         this.keyListener = scene.getKeyListener();
-        this.movingRightAnimation = new Animation("moving_right.png", ANIMATION_FILE, 5, 1);
-        this.movingLeftAnimation = new Animation("moving_left.png", ANIMATION_FILE, 5, 10);
-        this.animation = movingRightAnimation;
 
+        getPlayerDescription();
+        setAnimations();
+        setStates();
+        setColliders();
+    }
+
+    private void setColliders() {
+        Collider mainCollider = new CircleCollider("PlayerMainCollider", position, (int) Settings.getValue("player_sprite_size"), this);
+        colliders.put(mainCollider.getName(), mainCollider);
+    }
+
+    private void setStates() {
         this.fallingLeftState = new FallingLeftState(this);
         this.fallingRightState = new FallingRightState(this);
         this.jumpingLeftState = new JumpingLeftState(this);
@@ -42,9 +48,19 @@ public class Player extends GameObject {
         this.movingRightState = new MovingRightState(this);
 
         this.state = new FallingRightState(this);
+    }
 
-        Collider mainCollider = new CircleCollider("PlayerMainCollider", position, SPRITE_SIZE, this);
-        colliders.put(mainCollider.getName(), mainCollider);
+    private void setAnimations() {
+        this.movingRightAnimation = description.getAnimation("standing_right"); //new Animation("standing_right.png", ANIMATION_FILE, 1, 1);
+        this.movingLeftAnimation = description.getAnimation("standing_left"); //new Animation("standing_left.png", ANIMATION_FILE, 1, 10);
+
+        this.animation = movingRightAnimation;
+    }
+
+    private void getPlayerDescription() {
+        this.description = (PlayerDescription) GameObjectDescriptionHandler.get("Player", new PlayerDescription());
+        this.weight = description.getWeight();
+        this.maxSpeed = description.getMaxSpeed();
     }
 
     @Override

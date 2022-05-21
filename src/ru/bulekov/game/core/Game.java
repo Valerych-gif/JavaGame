@@ -1,5 +1,7 @@
 package ru.bulekov.game.core;
 
+import ru.bulekov.game.config.GameSettingsLoader;
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.input.GameKeyListener;
 import ru.bulekov.game.physic.CollisionsHandler;
 import ru.bulekov.game.render.DebugRenderer;
@@ -15,13 +17,16 @@ public class Game {
     private final GameKeyListener keyListener;
     private final Scene gameScene, menuScene;
     private final CollisionsHandler collisionsHandler;
+    private final Settings settings;
+
 
     private final int width;
     private final int height;
 
-    public Game(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Game() {
+        this.settings = GameSettingsLoader.loadSettings();
+        this.width = (int) settings.getValue("WINDOW_WIDTH");
+        this.height = (int) settings.getValue("WINDOW_HEIGHT");
         this.keyListener = new GameKeyListener();
         this.renderer = new MainRenderer();
         this.debugRenderer = new DebugRenderer();
@@ -60,7 +65,7 @@ public class Game {
                 this.scene = gameScene;
                 break;
             default:
-                this.scene = menuScene;
+                throw new IllegalStateException("Illegal state number: " + sceneNum);
         }
         renderer.setScene(scene);
     }
@@ -91,5 +96,9 @@ public class Game {
 
     public CollisionsHandler getCollisionsHandler() {
         return collisionsHandler;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }

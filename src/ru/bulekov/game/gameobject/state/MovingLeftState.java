@@ -4,11 +4,9 @@ import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Vector2;
 import ru.bulekov.game.physic.Force;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
 
-import static ru.bulekov.game.constants.GameConstants.accuracy;
+import static ru.bulekov.game.config.GameConstants.accuracy;
 
 public class MovingLeftState extends State {
 

@@ -1,0 +1,15 @@
+{
+  "object_name": "Player",
+  "states_list": [
+    "falling_left",
+    "falling_right",
+    "standing_left",
+    "standing_right",
+    "jumping_left",
+    "jumping_right",
+    "moving_left",
+    "moving_right"
+  ],
+  "weight": 100,
+  "max_speed": 1.5
+}

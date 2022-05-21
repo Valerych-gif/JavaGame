@@ -1,9 +1,10 @@
 package ru.bulekov.game.render;
 
 import lombok.Data;
-import ru.bulekov.game.render.asset.AssetLoader;
-import ru.bulekov.game.render.asset.ImagesPack;
-import ru.bulekov.game.render.asset.framedescription.FrameDescription;
+import ru.bulekov.game.config.Settings;
+import ru.bulekov.game.config.asset.AssetLoader;
+import ru.bulekov.game.config.asset.ImagesPack;
+import ru.bulekov.game.config.asset.framedescription.FrameDescription;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,7 +16,7 @@ import java.util.List;
 @Data
 public class Animation {
 
-    private final String ASSET_PATH = "data/assets/images/";
+    private final String ASSET_PATH = (String) Settings.getValue("asset_path");
 
     private BufferedImage image;
     private String fileName;

@@ -1,5 +1,6 @@
 package ru.bulekov.game.render;
 
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.core.Game;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.input.GameKeyListener;
@@ -11,8 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.List;
 
-import static ru.bulekov.game.constants.GameConstants.TITLE;
-import static ru.bulekov.game.constants.GameConstants.debugMode;
+import static ru.bulekov.game.config.GameConstants.debugMode;
 
 
 public class MainRenderer extends JFrame {
@@ -35,7 +35,7 @@ public class MainRenderer extends JFrame {
         this.gameObjects = scene.getGameObjects();
         this.keyListener = game.getKeyListener();
 
-        setTitle(TITLE);
+        setTitle((String) Settings.getValue("TITLE"));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 

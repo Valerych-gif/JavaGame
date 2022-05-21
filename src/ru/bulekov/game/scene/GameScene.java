@@ -29,9 +29,9 @@ public class GameScene extends Scene {
         this.collisionsHandler = game.getCollisionsHandler();
         gameObjects = new ArrayList<>();
 
-        Enemy enemy = new Enemy("Enemy", this);
-        enemy.setPosition(new Position(new Vector2(100, 500)));
-        gameObjects.add(enemy);
+//        Enemy enemy = new Enemy("Enemy", this);
+//        enemy.setPosition(new Position(new Vector2(100, 500)));
+//        gameObjects.add(enemy);
 
         Player player = new Player(this);
         player.setPosition(new Position(new Vector2(300, 500)));

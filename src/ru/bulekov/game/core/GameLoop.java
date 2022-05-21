@@ -1,16 +1,20 @@
 package ru.bulekov.game.core;
 
 
-import static ru.bulekov.game.constants.GameConstants.*;
+import ru.bulekov.game.config.Settings;
 
 public class GameLoop implements Runnable {
 
     private static final int MILLIS_PER_SECOND = 1_000;
     private static final int NANOS_PER_SECOND = 1_000_000_000;
 
-    private final double updateRate = (1 / UPS) * NANOS_PER_SECOND;
-    private final double renderRate = (1 / FPS) * NANOS_PER_SECOND;
-    private final double updateStatsRate = 1 / USPS;
+    private final int UPS = (int) Settings.getValue("UPS");
+    private final int FPS = (int) Settings.getValue("FPS");
+    private final int USPS = (int) Settings.getValue("USPS");
+
+    private final double updateRate = (double) (1 / UPS) * NANOS_PER_SECOND;
+    private final double renderRate = (double) (1 / FPS) * NANOS_PER_SECOND;
+    private final double updateStatsRate = (double) 1 / USPS;
 
     private boolean isRunning = true;
 

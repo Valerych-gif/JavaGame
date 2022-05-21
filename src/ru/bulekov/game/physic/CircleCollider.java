@@ -1,16 +1,15 @@
 package ru.bulekov.game.physic;
 
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;
 
 import java.awt.*;
 
-import static ru.bulekov.game.constants.GameConstants.WINDOW_HEIGHT;
-
 public class CircleCollider extends Collider{
 
-    private float diameter;
+    private final float diameter;
 
     public CircleCollider(String name, Position position, float diameter, GameObject gameObject) {
         super(name, position, gameObject);
@@ -20,7 +19,7 @@ public class CircleCollider extends Collider{
     @Override
     public void render(Graphics g) {
         g.setColor(Color.RED);
-        g.drawOval((int) position.getX(), WINDOW_HEIGHT - (int) position.getY(), (int) diameter, (int) diameter);
+        g.drawOval((int) position.getX(), (int) Settings.getValue("WINDOW_HEIGHT") - (int) position.getY(), (int) diameter, (int) diameter);
     }
 
     @Override

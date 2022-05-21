@@ -2,11 +2,9 @@ package ru.bulekov.game.gameobject.state;
 
 import ru.bulekov.game.gameobject.GameObject;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
 
-import static ru.bulekov.game.constants.GameConstants.gravity;
+import static ru.bulekov.game.config.GameConstants.gravity;
 
 public class JumpingLeftState extends State {
     public JumpingLeftState(GameObject gameObject) {

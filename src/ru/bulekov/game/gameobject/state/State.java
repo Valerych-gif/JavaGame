@@ -1,5 +1,6 @@
 package ru.bulekov.game.gameobject.state;
 
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;
@@ -7,17 +8,13 @@ import ru.bulekov.game.physic.Acceleration;
 import ru.bulekov.game.physic.Velocity;
 import ru.bulekov.game.render.Animation;
 
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import static ru.bulekov.game.constants.GameConstants.WINDOW_HEIGHT;
-
 public abstract class State {
 
     protected final GameObject gameObject;
-    protected Image image;
     protected Animation animation;
     private int frameNumber;
     protected long frameDuration;
@@ -67,7 +64,11 @@ public abstract class State {
             frameNumber++;
             if (frameNumber >= frames.size()) frameNumber = 0;
         }
-        g.drawImage(frames.get(frameNumber), (int) gameObject.getPosition().getX(), WINDOW_HEIGHT - (int) gameObject.getPosition().getY(), null);
+        g.drawImage(
+                frames.get(frameNumber),
+                (int) gameObject.getPosition().getX(),
+                (int) Settings.getValue("WINDOW_HEIGHT") - (int) gameObject.getPosition().getY(),
+                null);
         gameObject.debugRender(g);
     }
 }

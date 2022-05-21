@@ -6,7 +6,7 @@ import ru.bulekov.game.geometry.Vector2;
 
 import java.awt.*;
 
-import static ru.bulekov.game.constants.GameConstants.gravity;
+import static ru.bulekov.game.config.GameConstants.gravity;
 
 public class FallingRightState extends State {
 

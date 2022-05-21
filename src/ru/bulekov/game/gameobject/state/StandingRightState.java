@@ -7,7 +7,7 @@ import ru.bulekov.game.physic.Velocity;
 
 import java.awt.*;
 
-import static ru.bulekov.game.constants.GameConstants.accuracy;
+import static ru.bulekov.game.config.GameConstants.accuracy;
 
 public class StandingRightState extends State {
     public StandingRightState(GameObject gameObject) {

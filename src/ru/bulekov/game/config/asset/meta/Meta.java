@@ -1,4 +1,4 @@
-package ru.bulekov.game.render.asset.meta;
+package ru.bulekov.game.config.asset.meta;
 
 import lombok.Data;
 
