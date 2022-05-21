@@ -1,10 +1,15 @@
 package ru.bulekov.game.gameobject;
 
+import lombok.Data;
+import ru.bulekov.game.asset.AssetsHandler;
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.state.State;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;
+import ru.bulekov.game.input.GameKeyListener;
 import ru.bulekov.game.physic.*;
 import ru.bulekov.game.render.Animation;
+import ru.bulekov.game.render.AnimationSettings;
 import ru.bulekov.game.scene.GameScene;
 import ru.bulekov.game.scene.Scene;
 
@@ -12,7 +17,12 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public abstract class GameObject {
+
+    protected Settings settings;
+    protected GameKeyListener keyListener;
+    protected AssetsHandler assetsHandler;
 
     protected String gameObjectId;
     protected Position position;
@@ -28,6 +38,7 @@ public abstract class GameObject {
     Possible animations
      */
 
+    protected AnimationSettings standingRightAnimationSetting;
     protected Animation movingRightAnimation;
     protected Animation movingLeftAnimation;
 
@@ -52,8 +63,12 @@ public abstract class GameObject {
     protected Map<String, Collider> colliders;
     protected Acceleration acceleration;
 
+    public GameObject() {
+    }
+
     public GameObject(String gameObjectId, Scene scene) {
 
+        this.settings = Settings.getInstance();
         this.gameObjectId = gameObjectId;
         this.colliders = new HashMap<>();
         this.velocity = new Velocity();
@@ -67,95 +82,6 @@ public abstract class GameObject {
         collisionsHandler.checkCollides(this);
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
-
     public abstract void render(Graphics g);
-
     public abstract void debugRender(Graphics g);
-
-    public String getGameObjectId() {
-        return gameObjectId;
-    }
-
-    public Map<String, Collider> getColliders() {
-        return colliders;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Force getForce() {
-        return force;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public Velocity getVelocity() {
-        return velocity;
-    }
-
-    public Controller getController() {
-        return controller;
-    }
-
-    public float getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public State getStandingLeftState() {
-        return standingLeftState;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public State getFallingLeftState() {
-        return fallingLeftState;
-    }
-
-    public State getFallingRightState() {
-        return fallingRightState;
-    }
-
-    public State getJumpingLeftState() {
-        return jumpingLeftState;
-    }
-
-    public State getJumpingRightState() {
-        return jumpingRightState;
-    }
-
-    public State getStandingRightState() {
-        return standingRightState;
-    }
-
-    public State getMovingLeftState() {
-        return movingLeftState;
-    }
-
-    public State getMovingRightState() {
-        return movingRightState;
-    }
-
-    public void setAcceleration(Acceleration acceleration) {
-        this.acceleration = acceleration;
-    }
-
-    public Acceleration getAcceleration() {
-        return this.acceleration;
-    }
-
-    public Animation getAnimation(){
-        return animation;
-    }
 }

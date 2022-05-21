@@ -4,17 +4,32 @@ import java.util.Map;
 
 public class Settings {
 
-    private static Map<String, Object> settings;
+    private static Settings instance;
 
-    public static void setValue(String key, Object value){
+    private Map<String, Object> settings;
+
+    private Settings() {
+    }
+
+    public static Settings getInstance() {
+        if (instance == null) {
+            synchronized (Settings.class) {
+                if (instance == null)
+                    instance = new Settings();
+            }
+        }
+        return instance;
+    }
+
+    public void setValue(String key, Object value) {
         settings.put(key, value);
     }
 
-    public static Object getValue(String key){
+    public Object getValue(String key) {
         return settings.get(key);
     }
 
-    public static void setValues(Map<String, Object> settingsMap) {
+    public void setValues(Map<String, Object> settingsMap) {
         settings = settingsMap;
     }
 }

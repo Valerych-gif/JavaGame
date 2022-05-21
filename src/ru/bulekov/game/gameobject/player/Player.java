@@ -1,13 +1,14 @@
 package ru.bulekov.game.gameobject.player;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.asset.GameObjectDescriptionHandler;
-import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
+import ru.bulekov.game.gameobject.ObjectDescription;
 import ru.bulekov.game.gameobject.state.*;
 import ru.bulekov.game.geometry.Position;
-import ru.bulekov.game.input.GameKeyListener;
 import ru.bulekov.game.physic.CircleCollider;
 import ru.bulekov.game.physic.Collider;
+import ru.bulekov.game.render.AnimationSettings;
 import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
@@ -15,25 +16,33 @@ import java.awt.event.KeyEvent;
 
 import static ru.bulekov.game.config.GameConstants.debugMode;
 
+@Slf4j
 public class Player extends GameObject {
 
-    private PlayerDescription description;
-    private final GameKeyListener keyListener;
+    private ObjectDescription description;
 
     public Player(Scene scene) {
 
         super("Player", scene);
         this.position = new Position();
         this.keyListener = scene.getKeyListener();
+        this.assetsHandler = scene.getGame().getAssetsHandler();
+        this.standingRightAnimationSetting = AnimationSettings.builder()
+                .animationName("standing_right.png")
+                .fileName("images/tank.json")
+                .framesNumber(1)
+                .framesPerSecond(2)
+                .build();
 
         getPlayerDescription();
-        setAnimations();
         setStates();
         setColliders();
+
+        log.info("Created Player object {}", description);
     }
 
     private void setColliders() {
-        Collider mainCollider = new CircleCollider("PlayerMainCollider", position, (int) Settings.getValue("player_sprite_size"), this);
+        Collider mainCollider = new CircleCollider("PlayerMainCollider", position, (int) description.getWidth(), this);
         colliders.put(mainCollider.getName(), mainCollider);
     }
 
@@ -50,15 +59,9 @@ public class Player extends GameObject {
         this.state = new FallingRightState(this);
     }
 
-    private void setAnimations() {
-        this.movingRightAnimation = description.getAnimation("standing_right"); //new Animation("standing_right.png", ANIMATION_FILE, 1, 1);
-        this.movingLeftAnimation = description.getAnimation("standing_left"); //new Animation("standing_left.png", ANIMATION_FILE, 1, 10);
-
-        this.animation = movingRightAnimation;
-    }
-
     private void getPlayerDescription() {
-        this.description = (PlayerDescription) GameObjectDescriptionHandler.get("Player", new PlayerDescription());
+        GameObjectDescriptionHandler descriptionHandler = new GameObjectDescriptionHandler();
+        this.description = descriptionHandler.get(assetsHandler, "Player");
         this.weight = description.getWeight();
         this.maxSpeed = description.getMaxSpeed();
     }
@@ -92,13 +95,5 @@ public class Player extends GameObject {
         if (debugMode) {
             colliders.forEach((name, collider) -> collider.render(g));
         }
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public GameKeyListener getKeyListener() {
-        return keyListener;
     }
 }

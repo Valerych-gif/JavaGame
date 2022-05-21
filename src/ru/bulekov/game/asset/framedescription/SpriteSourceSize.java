@@ -1,4 +1,4 @@
-package ru.bulekov.game.config.asset.framedescription;
+package ru.bulekov.game.asset.framedescription;
 
 import lombok.Data;
 

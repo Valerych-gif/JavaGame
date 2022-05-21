@@ -1,5 +1,6 @@
 package ru.bulekov.game.scene;
 
+import lombok.Data;
 import ru.bulekov.game.core.Game;
 import ru.bulekov.game.render.MainRenderer;
 import ru.bulekov.game.gameobject.GameObject;
@@ -9,6 +10,7 @@ import ru.bulekov.game.render.DebugRenderer;
 import java.awt.*;
 import java.util.List;
 
+@Data
 public abstract class Scene {
 
     public static final int MENU = 0;
@@ -18,6 +20,9 @@ public abstract class Scene {
     protected MainRenderer renderer;
     protected DebugRenderer debugRenderer;
     protected Canvas canvas;
+
+    public Scene() {
+    }
 
     public Scene(String name) {
         this.name = name;

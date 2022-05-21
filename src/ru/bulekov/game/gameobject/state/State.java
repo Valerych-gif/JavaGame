@@ -20,10 +20,12 @@ public abstract class State {
     protected long frameDuration;
     protected List<BufferedImage> frames;
     private long lastFrameTimestamp;
+    protected Settings settings;
 
     public State(GameObject gameObject) {
+        this.settings = Settings.getInstance();
         this.gameObject = gameObject;
-        this.animation = gameObject.getAnimation();
+        this.animation = new Animation(gameObject.getAssetsHandler(), gameObject.getStandingRightAnimationSetting());
         this.frames = animation.getFrames();
         this.frameDuration = 1_000 / animation.getFramesPerSecond();
         this.lastFrameTimestamp = System.currentTimeMillis();
@@ -67,7 +69,7 @@ public abstract class State {
         g.drawImage(
                 frames.get(frameNumber),
                 (int) gameObject.getPosition().getX(),
-                (int) Settings.getValue("WINDOW_HEIGHT") - (int) gameObject.getPosition().getY(),
+                (int) settings.getValue("WINDOW_HEIGHT") - (int) gameObject.getPosition().getY(),
                 null);
         gameObject.debugRender(g);
     }

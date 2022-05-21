@@ -20,6 +20,7 @@ public class MainRenderer extends JFrame {
     private Canvas canvas;
     private List<GameObject> gameObjects;
     private Game game;
+    private Settings settings;
     private GameKeyListener keyListener;
     private Scene scene;
 
@@ -29,13 +30,14 @@ public class MainRenderer extends JFrame {
 
     public void init(Game game) {
         this.game = game;
+        this.settings = game.getSettings();
         int width = game.getWidth();
         int height = game.getHeight();
         this.scene = game.getScene();
         this.gameObjects = scene.getGameObjects();
         this.keyListener = game.getKeyListener();
 
-        setTitle((String) Settings.getValue("TITLE"));
+        setTitle((String) settings.getValue("TITLE"));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 

@@ -1,7 +1,8 @@
 package ru.bulekov.game.scene;
 
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.core.Game;
-import ru.bulekov.game.gameobject.Enemy;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.gameobject.player.Player;
 import ru.bulekov.game.geometry.Position;
@@ -13,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
+@Data
 public class GameScene extends Scene {
 
     private List<GameObject> gameObjects;
@@ -28,10 +31,6 @@ public class GameScene extends Scene {
         this.keyListener = game.getKeyListener();
         this.collisionsHandler = game.getCollisionsHandler();
         gameObjects = new ArrayList<>();
-
-//        Enemy enemy = new Enemy("Enemy", this);
-//        enemy.setPosition(new Position(new Vector2(100, 500)));
-//        gameObjects.add(enemy);
 
         Player player = new Player(this);
         player.setPosition(new Position(new Vector2(300, 500)));
