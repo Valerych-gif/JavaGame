@@ -8,7 +8,7 @@ import static ru.bulekov.game.config.GameConstants.gravity;
 
 public class JumpingLeftState extends State {
     public JumpingLeftState(GameObject gameObject) {
-        super(gameObject);
+        super(gameObject, "standing_right");
         this.animation = gameObject.getAnimation();
     }
 
@@ -17,7 +17,7 @@ public class JumpingLeftState extends State {
         gameObject.getForce().add(gravity);
         if (gameObject.getVelocity().getY()<0){
             System.out.println("Set state to Falling Left");
-            gameObject.setState(gameObject.getFallingLeftState());
+            gameObject.setCurrentState(gameObject.getFallingLeftState());
         }
         super.physicCalculate();
     }

@@ -11,7 +11,7 @@ import static ru.bulekov.game.config.GameConstants.gravity;
 public class FallingLeftState extends State {
 
     public FallingLeftState(GameObject gameObject) {
-        super(gameObject);
+        super(gameObject, "standing_right");
     }
 
     @Override
@@ -22,7 +22,7 @@ public class FallingLeftState extends State {
             gameObject.getVelocity().setVelocityVector2(new Vector2(gameObject.getVelocity().getX(), 0));
             gameObject.getForce().sub(gravity);
             System.out.println("Set state to Moving Left");
-            gameObject.setState(gameObject.getMovingLeftState());
+            gameObject.setCurrentState(gameObject.getMovingLeftState());
         }
         super.physicCalculate();
     }

@@ -11,7 +11,7 @@ import static ru.bulekov.game.config.GameConstants.accuracy;
 public class MovingRightState extends State {
 
     public MovingRightState(GameObject gameObject) {
-        super(gameObject);
+        super(gameObject, "standing_right");
         this.animation = gameObject.getAnimation();
     }
 
@@ -26,7 +26,7 @@ public class MovingRightState extends State {
             gameObject.getForce().sub(friction);
             gameObject.getVelocity().setVelocityVector2(new Vector2());
             System.out.println("Set state to Standing Right");
-            gameObject.setState(gameObject.getStandingRightState());
+            gameObject.setCurrentState(gameObject.getStandingRightState());
         }
 
         if (gameObject.getController().isGoingRight() && horizontalSpeed < gameObject.getMaxSpeed()) {
@@ -36,12 +36,12 @@ public class MovingRightState extends State {
             Force leftForce = new Force("LeftForce", new Vector2(-4, 0));
             gameObject.getForce().add(leftForce);
             System.out.println("Set state to Moving Left");
-            gameObject.setState(gameObject.getMovingLeftState());
+            gameObject.setCurrentState(gameObject.getMovingLeftState());
         }
         if (gameObject.getController().isJump()){
             gameObject.getVelocity().getVelocityVector2().add(new Vector2(0, 2));
             System.out.println("Set state to Jump Right");
-            gameObject.setState(gameObject.getJumpingRightState());
+            gameObject.setCurrentState(gameObject.getJumpingRightState());
         }
 
         super.physicCalculate();

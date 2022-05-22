@@ -7,6 +7,7 @@ import ru.bulekov.game.geometry.Vector2;
 import ru.bulekov.game.physic.Acceleration;
 import ru.bulekov.game.physic.Velocity;
 import ru.bulekov.game.render.Animation;
+import ru.bulekov.game.render.AnimationSettings;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,13 +23,22 @@ public abstract class State {
     private long lastFrameTimestamp;
     protected Settings settings;
 
-    public State(GameObject gameObject) {
+    public State(GameObject gameObject, String state) {
         this.settings = Settings.getInstance();
         this.gameObject = gameObject;
-        this.animation = new Animation(gameObject.getAssetsHandler(), gameObject.getStandingRightAnimationSetting());
+        this.animation = new Animation(gameObject, getAnimationSettings(state));
         this.frames = animation.getFrames();
         this.frameDuration = 1_000 / animation.getFramesPerSecond();
         this.lastFrameTimestamp = System.currentTimeMillis();
+    }
+
+    private AnimationSettings getAnimationSettings(String state) {
+        return AnimationSettings.builder()
+                .animationName(state)
+                .fileName(gameObject.getGameObjectId() + "/animations.json")
+                .framesNumber(5)
+                .framesPerSecond(1)
+                .build();
     }
 
     protected void physicCalculate() {

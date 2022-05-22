@@ -6,6 +6,7 @@ import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.asset.AssetsHandler;
 import ru.bulekov.game.asset.ImagesPack;
 import ru.bulekov.game.asset.framedescription.FrameDescription;
+import ru.bulekov.game.gameobject.GameObject;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,32 +23,26 @@ public class Animation {
     private final String ASSET_PATH = (String) Settings.getInstance().getValue("asset_path");
 
     private BufferedImage image;
-    private String fileName;
     private List<BufferedImage> frames;
     private long framesPerSecond;
 
-    public Animation(AssetsHandler assetsHandler, AnimationSettings animationSettings) {
-        this.fileName = animationSettings.getFileName();
-        this.frames = new ArrayList<>();
+    private GameObject gameObject;
+    private AnimationSettings animationSettings;
+
+    public Animation(GameObject gameObject, AnimationSettings animationSettings) {
+        this.gameObject = gameObject;
+        this.animationSettings = animationSettings;
         this.framesPerSecond = animationSettings.getFramesPerSecond();
-        ImagesPack imagesPack = assetsHandler.loadImagesPack(fileName);
-        String parentDirectory = new File(fileName).getParent();
-        getImage(animationSettings.getAnimationName(), parentDirectory, imagesPack);
+        this.frames = new ArrayList<>();
+        getAnimationFromFile();
         putFramesIntoList(animationSettings.getFramesNumber());
     }
 
-    private void putFramesIntoList(int framesNumber) {
-        int animationWidth = image.getWidth();
-        int frameWidth = animationWidth / framesNumber;
-        int frameHeight = image.getHeight();
-        for (int i = 0; i < framesNumber; i++) {
-            frames.add(image.getSubimage(i * frameWidth, 0, frameWidth, frameHeight));
-        }
-    }
+    private void getAnimationFromFile() {
 
-    private void getImage(String animationName, String imageDirectory, ImagesPack imagesPack) {
+        ImagesPack imagesPack = gameObject.getAssetsHandler().loadImagesPack(animationSettings.getFileName());
 
-        File imageFile = Path.of(ASSET_PATH, imageDirectory,  imagesPack.getMeta().getImage()).toFile();
+        File imageFile = Path.of(ASSET_PATH, gameObject.getGameObjectId(), imagesPack.getMeta().getImage()).toFile();
         BufferedImage atlas = null;
         try {
             atlas = ImageIO.read(imageFile);
@@ -56,16 +51,16 @@ public class Animation {
         }
 
         FrameDescription frame = imagesPack.getFrames().stream()
-                .filter(frameDescription -> frameDescription.getFilename().equals(animationName))
+                .filter(frameDescription -> frameDescription.getFilename().equals(animationSettings.getAnimationName()))
                 .findFirst().orElse(null);
 
         if (atlas == null) {
-            log.error("Atlas {} is null", animationName);
+            log.error("Atlas {} is null", animationSettings.getAnimationName());
             System.exit(1);
         }
 
         if (frame == null) {
-            log.error("Frame in atlas {} is null", animationName);
+            log.error("Frame in atlas {} is null", animationSettings.getAnimationName());
             System.exit(1);
         }
 
@@ -76,6 +71,15 @@ public class Animation {
                 frame.getFrame().getH()
         );
 
+    }
+
+    private void putFramesIntoList(int framesNumber) {
+        int animationWidth = image.getWidth();
+        int frameWidth = animationWidth / framesNumber;
+        int frameHeight = image.getHeight();
+        for (int i = 0; i < framesNumber; i++) {
+            frames.add(image.getSubimage(i * frameWidth, 0, frameWidth, frameHeight));
+        }
     }
 
 }

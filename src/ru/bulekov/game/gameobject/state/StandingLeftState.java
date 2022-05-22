@@ -10,7 +10,7 @@ import static ru.bulekov.game.config.GameConstants.accuracy;
 
 public class StandingLeftState extends State {
     public StandingLeftState(GameObject gameObject) {
-        super(gameObject);
+        super(gameObject, "standing_right");
         this.animation = gameObject.getAnimation();
     }
 
@@ -18,9 +18,9 @@ public class StandingLeftState extends State {
     public void update(float dt) {
         float vX = gameObject.getVelocity().getX();
         if (vX > accuracy) {
-            gameObject.setState(gameObject.getMovingRightState());
+            gameObject.setCurrentState(gameObject.getMovingRightState());
         } else if (vX < -accuracy) {
-            gameObject.setState(gameObject.getMovingLeftState());
+            gameObject.setCurrentState(gameObject.getMovingLeftState());
         } else {
             gameObject.getVelocity().setVelocityVector2(new Vector2());
         }
@@ -28,20 +28,20 @@ public class StandingLeftState extends State {
             Force rightForce = new Force("RightForce", new Vector2(4, 0));
             gameObject.getForce().add(rightForce);
             System.out.println("Set state to Moving Right");
-            gameObject.setState(gameObject.getMovingRightState());
+            gameObject.setCurrentState(gameObject.getMovingRightState());
         } else if (gameObject.getController().isGoingLeft()) {
             Force leftForce = new Force("LeftForce", new Vector2(-4, 0));
             gameObject.getForce().add(leftForce);
             System.out.println("Set state to Moving Right");
-            gameObject.setState(gameObject.getMovingLeftState());
+            gameObject.setCurrentState(gameObject.getMovingLeftState());
         }
         if (gameObject.getController().isJump()){
             gameObject.getVelocity().getVelocityVector2().add(new Vector2(0, 2));
             System.out.println("Set state to Jump Left");
-            gameObject.setState(gameObject.getJumpingLeftState());
+            gameObject.setCurrentState(gameObject.getJumpingLeftState());
         }
         if (gameObject.getVelocity().getX()!=0){
-            gameObject.setState(gameObject.getMovingRightState());
+            gameObject.setCurrentState(gameObject.getMovingRightState());
         }
 
         super.physicCalculate();

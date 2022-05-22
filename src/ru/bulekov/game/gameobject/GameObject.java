@@ -15,7 +15,9 @@ import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 public abstract class GameObject {
@@ -31,14 +33,14 @@ public abstract class GameObject {
     protected float weight;
     protected float maxSpeed;
 
-    protected State state;
+    protected State currentState;
     protected Animation animation;
 
     /*
     Possible animations
      */
 
-    protected AnimationSettings standingRightAnimationSetting;
+    protected List<AnimationSettings> animationSettings;
     protected Animation movingRightAnimation;
     protected Animation movingLeftAnimation;
 
@@ -68,6 +70,8 @@ public abstract class GameObject {
 
     public GameObject(String gameObjectId, Scene scene) {
 
+        this.assetsHandler = scene.getGame().getAssetsHandler();
+        this.keyListener = scene.getKeyListener();
         this.settings = Settings.getInstance();
         this.gameObjectId = gameObjectId;
         this.colliders = new HashMap<>();
@@ -76,6 +80,17 @@ public abstract class GameObject {
         this.controller = new Controller();
         this.collisionsHandler = ((GameScene) scene).getCollisionsHandler();
     }
+
+//    protected void setAnimationSettings(List<String> states) {
+//        animationSettings = states.stream().map(
+//                        s -> AnimationSettings.builder()
+//                                .animationName(s)
+//                                .fileName(gameObjectId + "/" + s + ".json")
+//                                .framesNumber(5)
+//                                .framesPerSecond(1)
+//                                .build())
+//                .collect(Collectors.toList());
+//    }
 
     public void update(float dt) {
         force = new Force("ForceSum", new Vector2(0, 0));

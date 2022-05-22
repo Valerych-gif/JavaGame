@@ -13,6 +13,8 @@ import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.bulekov.game.config.GameConstants.debugMode;
 
@@ -22,17 +24,8 @@ public class Player extends GameObject {
     private ObjectDescription description;
 
     public Player(Scene scene) {
-
-        super("Player", scene);
+        super("player", scene);
         this.position = new Position();
-        this.keyListener = scene.getKeyListener();
-        this.assetsHandler = scene.getGame().getAssetsHandler();
-        this.standingRightAnimationSetting = AnimationSettings.builder()
-                .animationName("standing_right.png")
-                .fileName("images/tank.json")
-                .framesNumber(1)
-                .framesPerSecond(2)
-                .build();
 
         getPlayerDescription();
         setStates();
@@ -47,6 +40,7 @@ public class Player extends GameObject {
     }
 
     private void setStates() {
+
         this.fallingLeftState = new FallingLeftState(this);
         this.fallingRightState = new FallingRightState(this);
         this.jumpingLeftState = new JumpingLeftState(this);
@@ -55,13 +49,12 @@ public class Player extends GameObject {
         this.standingRightState = new StandingRightState(this);
         this.movingLeftState = new MovingLeftState(this);
         this.movingRightState = new MovingRightState(this);
-
-        this.state = new FallingRightState(this);
+        this.currentState = new FallingRightState(this);
     }
 
     private void getPlayerDescription() {
         GameObjectDescriptionHandler descriptionHandler = new GameObjectDescriptionHandler();
-        this.description = descriptionHandler.get(assetsHandler, "Player");
+        this.description = descriptionHandler.get(assetsHandler, "player");
         this.weight = description.getWeight();
         this.maxSpeed = description.getMaxSpeed();
     }
@@ -81,13 +74,13 @@ public class Player extends GameObject {
             controller.setJump(true);
         }
 
-        state.update(dt);
+        currentState.update(dt);
         colliders.get("PlayerMainCollider").setPosition(position);
     }
 
     @Override
     public void render(Graphics g) {
-        state.render(g);
+        currentState.render(g);
     }
 
     @Override
