@@ -25,7 +25,6 @@ public class MovingLeftState extends State {
         if (horizontalSpeed < -accuracy) {
             gameObject.getForce().add(friction);
         } else {
-            gameObject.getForce().sub(friction);
             gameObject.getVelocity().setVelocityVector2(new Vector2());
             System.out.println("Set state to Standing Left");
             gameObject.setCurrentState(gameObject.getStandingLeftState());

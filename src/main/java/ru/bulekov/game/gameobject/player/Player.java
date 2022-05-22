@@ -3,11 +3,10 @@ package ru.bulekov.game.gameobject.player;
 import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.asset.GameObjectDescriptionHandler;
 import ru.bulekov.game.gameobject.GameObject;
-import ru.bulekov.game.gameobject.ObjectDescription;
 import ru.bulekov.game.gameobject.state.*;
 import ru.bulekov.game.geometry.Position;
-import ru.bulekov.game.physic.CircleCollider;
-import ru.bulekov.game.physic.Collider;
+import ru.bulekov.game.physic.collider.CircleCollider;
+import ru.bulekov.game.physic.collider.Collider;
 import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;

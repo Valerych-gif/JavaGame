@@ -1,7 +1,9 @@
 package ru.bulekov.game.physic;
 
+import lombok.Data;
 import ru.bulekov.game.geometry.Vector2;
 
+@Data
 public class Force {
 
     private String name;
@@ -14,23 +16,6 @@ public class Force {
 
     public Force(String name, Vector2 forceVector2) {
         this.name = name;
-        this.forceVector2 = forceVector2;
-        this.forceVector2.setY(this.forceVector2.getY());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Vector2 getForceVector2() {
-        return forceVector2;
-    }
-
-    public void setForceVector2(Vector2 forceVector2) {
         this.forceVector2 = forceVector2;
         this.forceVector2.setY(this.forceVector2.getY());
     }

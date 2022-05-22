@@ -1,5 +1,6 @@
 package ru.bulekov.game.gameobject.state;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Vector2;
 import ru.bulekov.game.physic.Force;
@@ -8,6 +9,7 @@ import java.awt.*;
 
 import static ru.bulekov.game.config.GameConstants.accuracy;
 
+@Slf4j
 public class MovingRightState extends State {
 
     public MovingRightState(GameObject gameObject) {
@@ -23,9 +25,8 @@ public class MovingRightState extends State {
         if (horizontalSpeed > accuracy) {
             gameObject.getForce().add(friction);
         } else {
-            gameObject.getForce().sub(friction);
             gameObject.getVelocity().setVelocityVector2(new Vector2());
-            System.out.println("Set state to Standing Right");
+            log.info("Set state to Standing Right");
             gameObject.setCurrentState(gameObject.getStandingRightState());
         }
 
@@ -35,12 +36,12 @@ public class MovingRightState extends State {
         } else if (gameObject.getController().isGoingLeft() && horizontalSpeed > -gameObject.getMaxSpeed()) {
             Force leftForce = new Force("LeftForce", new Vector2(-4, 0));
             gameObject.getForce().add(leftForce);
-            System.out.println("Set state to Moving Left");
+            log.info("Set state to Moving Left");
             gameObject.setCurrentState(gameObject.getMovingLeftState());
         }
         if (gameObject.getController().isJump()){
             gameObject.getVelocity().getVelocityVector2().add(new Vector2(0, 2));
-            System.out.println("Set state to Jump Right");
+            log.info("Set state to Jump Right");
             gameObject.setCurrentState(gameObject.getJumpingRightState());
         }
 

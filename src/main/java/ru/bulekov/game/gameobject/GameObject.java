@@ -8,6 +8,7 @@ import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.geometry.Vector2;
 import ru.bulekov.game.input.GameKeyListener;
 import ru.bulekov.game.physic.*;
+import ru.bulekov.game.physic.collider.Collider;
 import ru.bulekov.game.render.Animation;
 import ru.bulekov.game.render.AnimationSettings;
 import ru.bulekov.game.scene.GameScene;

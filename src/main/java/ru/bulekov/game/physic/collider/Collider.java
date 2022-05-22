@@ -1,4 +1,4 @@
-package ru.bulekov.game.physic;
+package ru.bulekov.game.physic.collider;
 
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Position;

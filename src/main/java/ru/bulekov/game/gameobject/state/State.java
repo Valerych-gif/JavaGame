@@ -1,5 +1,6 @@
 package ru.bulekov.game.gameobject.state;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.geometry.Position;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+@Slf4j
 public abstract class State {
 
     protected final GameObject gameObject;

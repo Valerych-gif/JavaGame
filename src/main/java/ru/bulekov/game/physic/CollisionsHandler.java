@@ -2,6 +2,7 @@ package ru.bulekov.game.physic;
 
 import ru.bulekov.game.core.Game;
 import ru.bulekov.game.gameobject.GameObject;
+import ru.bulekov.game.physic.collider.Collider;
 
 import java.util.List;
 import java.util.Map;
