@@ -8,20 +8,15 @@ import ru.bulekov.game.gameobject.state.*;
 import ru.bulekov.game.geometry.Position;
 import ru.bulekov.game.physic.CircleCollider;
 import ru.bulekov.game.physic.Collider;
-import ru.bulekov.game.render.AnimationSettings;
 import ru.bulekov.game.scene.Scene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.bulekov.game.config.GameConstants.debugMode;
 
 @Slf4j
 public class Player extends GameObject {
-
-    private ObjectDescription description;
 
     public Player(Scene scene) {
         super("player", scene);

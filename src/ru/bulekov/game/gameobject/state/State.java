@@ -35,9 +35,9 @@ public abstract class State {
     private AnimationSettings getAnimationSettings(String state) {
         return AnimationSettings.builder()
                 .animationName(state)
-                .fileName(gameObject.getGameObjectId() + "/animations.json")
-                .framesNumber(5)
-                .framesPerSecond(1)
+                .fileName("animations.json")
+                .frameWidth((int) gameObject.getDescription().getWidth())
+                .framesPerSecond((int) settings.getValue("frames_per_second"))
                 .build();
     }
 

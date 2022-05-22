@@ -2,10 +2,9 @@ package ru.bulekov.game.render;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ru.bulekov.game.config.Settings;
-import ru.bulekov.game.asset.AssetsHandler;
 import ru.bulekov.game.asset.ImagesPack;
 import ru.bulekov.game.asset.framedescription.FrameDescription;
+import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.gameobject.GameObject;
 
 import javax.imageio.ImageIO;
@@ -35,14 +34,15 @@ public class Animation {
         this.framesPerSecond = animationSettings.getFramesPerSecond();
         this.frames = new ArrayList<>();
         getAnimationFromFile();
-        putFramesIntoList(animationSettings.getFramesNumber());
+        putFramesIntoList(animationSettings.getFrameWidth());
     }
 
     private void getAnimationFromFile() {
 
-        ImagesPack imagesPack = gameObject.getAssetsHandler().loadImagesPack(animationSettings.getFileName());
+        Path animationDescriptionPath = Path.of(ASSET_PATH, gameObject.getGameObjectId(), "animations", animationSettings.getFileName());
+        ImagesPack imagesPack = gameObject.getAssetsHandler().loadImagesPack(animationDescriptionPath);
 
-        File imageFile = Path.of(ASSET_PATH, gameObject.getGameObjectId(), imagesPack.getMeta().getImage()).toFile();
+        File imageFile = Path.of(ASSET_PATH, gameObject.getGameObjectId(), "animations", imagesPack.getMeta().getImage()).toFile();
         BufferedImage atlas = null;
         try {
             atlas = ImageIO.read(imageFile);
@@ -51,7 +51,7 @@ public class Animation {
         }
 
         FrameDescription frame = imagesPack.getFrames().stream()
-                .filter(frameDescription -> frameDescription.getFilename().equals(animationSettings.getAnimationName()))
+                .filter(frameDescription -> frameDescription.getFilename().equals(animationSettings.getAnimationName() + ".png"))
                 .findFirst().orElse(null);
 
         if (atlas == null) {
@@ -73,9 +73,9 @@ public class Animation {
 
     }
 
-    private void putFramesIntoList(int framesNumber) {
+    private void putFramesIntoList(int frameWidth) {
         int animationWidth = image.getWidth();
-        int frameWidth = animationWidth / framesNumber;
+        int framesNumber = animationWidth / frameWidth;
         int frameHeight = image.getHeight();
         for (int i = 0; i < framesNumber; i++) {
             frames.add(image.getSubimage(i * frameWidth, 0, frameWidth, frameHeight));

@@ -17,12 +17,13 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Data
 public abstract class GameObject {
 
     protected Settings settings;
+    protected ObjectDescription description;
+
     protected GameKeyListener keyListener;
     protected AssetsHandler assetsHandler;
 
@@ -80,17 +81,6 @@ public abstract class GameObject {
         this.controller = new Controller();
         this.collisionsHandler = ((GameScene) scene).getCollisionsHandler();
     }
-
-//    protected void setAnimationSettings(List<String> states) {
-//        animationSettings = states.stream().map(
-//                        s -> AnimationSettings.builder()
-//                                .animationName(s)
-//                                .fileName(gameObjectId + "/" + s + ".json")
-//                                .framesNumber(5)
-//                                .framesPerSecond(1)
-//                                .build())
-//                .collect(Collectors.toList());
-//    }
 
     public void update(float dt) {
         force = new Force("ForceSum", new Vector2(0, 0));

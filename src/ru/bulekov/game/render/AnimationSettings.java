@@ -8,6 +8,6 @@ import lombok.Data;
 public class AnimationSettings {
     private String animationName;
     private String fileName;
-    private int framesNumber;
+    private int frameWidth;
     private long framesPerSecond;
 }

@@ -22,8 +22,8 @@ public class AssetsHandler {
 
     private final Map<String, ObjectDescription> objects = new HashMap<>();
 
-    public ImagesPack loadImagesPack(String fileName) {
-        File imagePackFile = Path.of(String.valueOf(settings.getValue("asset_path")), fileName).toFile();
+    public ImagesPack loadImagesPack(Path imagePath) {
+        File imagePackFile = imagePath.toFile();
         ImagesPack imagesPack = new ImagesPack();
         ObjectMapper objectMapper = new ObjectMapper();
         try {

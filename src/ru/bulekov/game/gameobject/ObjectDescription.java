@@ -11,6 +11,8 @@ public class ObjectDescription{
     private String objectName;
     @JsonProperty("width")
     private float width;
+    @JsonProperty("height")
+    private float height;
     @JsonProperty("weight")
     private float weight;
     @JsonProperty("max_speed")
