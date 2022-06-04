@@ -2,9 +2,9 @@
   "TITLE": "Game",
   "WINDOW_WIDTH": 1024,
   "WINDOW_HEIGHT": 720,
-  "FPS": 60,
-  "UPS": 240,
-  "USPS": 1,
+  "FPS": 60.0,
+  "UPS": 240.0,
+  "USPS": 1.0,
   "gravity": 0.9,
   "asset_path": "data/assets/",
   "frames_per_second": 3

@@ -1,6 +1,7 @@
 package ru.bulekov.game.scene;
 
 import lombok.Data;
+import ru.bulekov.game.asset.AssetsHandler;
 import ru.bulekov.game.core.Game;
 import ru.bulekov.game.render.MainRenderer;
 import ru.bulekov.game.gameobject.GameObject;
@@ -20,6 +21,8 @@ public abstract class Scene {
     protected MainRenderer renderer;
     protected DebugRenderer debugRenderer;
     protected Canvas canvas;
+    protected GameKeyListener keyListener;
+    protected AssetsHandler assetsHandler;
 
     public Scene() {
     }
@@ -28,8 +31,13 @@ public abstract class Scene {
         this.name = name;
     }
 
-    private void getGraphics() {
-        canvas = renderer.getCanvas();
+    public void init(Game game) {
+        this.game = game;
+        this.renderer = game.getRenderer();
+        this.debugRenderer = game.getDebugRenderer();
+        this.canvas = renderer.getCanvas();
+        this.keyListener = game.getKeyListener();
+        this.assetsHandler = game.getAssetsHandler();
     }
 
     public abstract void update(float dt);
@@ -40,15 +48,4 @@ public abstract class Scene {
     }
 
     public abstract List<GameObject> getGameObjects();
-
-    public GameKeyListener getKeyListener() {
-        return game.getKeyListener();
-    }
-
-    public void init(Game game) {
-        this.game = game;
-        this.renderer = game.getRenderer();
-        this.debugRenderer = game.getDebugRenderer();
-        getGraphics();
-    }
 }

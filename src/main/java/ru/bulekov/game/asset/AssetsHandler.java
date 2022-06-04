@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.core.Game;
+import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.gameobject.ObjectDescription;
+import ru.bulekov.game.map.description.MapDescription;
 import ru.bulekov.game.render.Animation;
 
 import java.io.File;
@@ -75,12 +77,11 @@ public class AssetsHandler {
             System.exit(1);
         }
     }
-
-    public Animation getAnimation() {
-        return null;
-    }
-
     public void init(Game game) {
         this.settings = game.getSettings();
+    }
+
+    public MapDescription getMap(int levelId) {
+        return null;
     }
 }

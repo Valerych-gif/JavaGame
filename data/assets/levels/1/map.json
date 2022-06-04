@@ -1,0 +1,49 @@
+{
+  "description": {
+    "id": 1,
+    "title": "Level 1",
+    "max_width": 100,
+    "max_height": 20,
+    "assets": {
+      "terrain": [
+        {
+          "id": 1,
+          "name": "grass",
+          "path": "terrain"
+        }
+      ],
+      "game_objects": [
+        {
+          "id": 1,
+          "name": "stone",
+          "path": "game_objects"
+        }
+      ],
+      "characters": [
+        {
+          "id": 1,
+          "name": "player",
+          "path": "player"
+        },
+        {
+          "id": 2,
+          "name": "enemy",
+          "path": "enemy"
+        }
+      ]
+    }
+  },
+  "terrain": [
+    0,
+    1,
+    2
+  ],
+  "game_objects": [
+    0,
+    1
+  ],
+  "characters": [
+    0,
+    1
+  ]
+}

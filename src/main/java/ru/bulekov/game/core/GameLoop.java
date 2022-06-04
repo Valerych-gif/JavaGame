@@ -14,13 +14,11 @@ public class GameLoop implements Runnable {
 
     private final Settings settings;
 
-    private final int UPS;
-    private final int FPS;
-    private final int USPS;
+    private final double UPS, FPS, USPS;
 
     private boolean isRunning = true;
 
-    private long nextUpdateStatsTime = (long) (System.currentTimeMillis() + MILLIS_PER_SECOND);
+    private long nextUpdateStatsTime = System.currentTimeMillis() + MILLIS_PER_SECOND;
     private int fps, ups;
     float dt;
 
@@ -31,17 +29,17 @@ public class GameLoop implements Runnable {
     public GameLoop(Game game) {
         this.game = game;
         this.settings = game.getSettings();
-        this.UPS = (int) settings.getValue("UPS");
-        this.FPS = (int) settings.getValue("FPS");
-        this.USPS = (int) settings.getValue("USPS");
+        this.UPS = (double) settings.getValue("UPS");
+        this.FPS = (double) settings.getValue("FPS");
+        this.USPS = (double) settings.getValue("USPS");
     }
 
 
     @Override
     public void run() {
 
-        double updateRate = (double) (1 / UPS) * NANOS_PER_SECOND;
-        double renderRate = (double) (1 / FPS) * NANOS_PER_SECOND;
+        double updateRate = (1 / UPS) * NANOS_PER_SECOND;
+        double renderRate = (1 / FPS) * NANOS_PER_SECOND;
         double updateStatsRate = (double) 1 / USPS;
 
         log.info("Game starting...");

@@ -19,7 +19,6 @@ import java.util.List;
 public class GameScene extends Scene {
 
     private List<GameObject> gameObjects;
-    private GameKeyListener keyListener;
     private CollisionsHandler collisionsHandler;
 
     public GameScene(String name) {
@@ -28,8 +27,8 @@ public class GameScene extends Scene {
 
     public void init(Game game){
         super.init(game);
-        this.keyListener = game.getKeyListener();
         this.collisionsHandler = game.getCollisionsHandler();
+
         gameObjects = new ArrayList<>();
 
         Player player = new Player(this);
@@ -44,11 +43,6 @@ public class GameScene extends Scene {
             game.setScene(Scene.MENU);
         }
         getGameObjects().forEach(gameObject -> gameObject.update(dt));
-    }
-
-    @Override
-    public void render() {
-        super.render();
     }
 
     @Override
