@@ -7,8 +7,5 @@
   "USPS": 1,
   "gravity": 0.9,
   "asset_path": "data/assets/",
-  "player_desc": "player",
-  "enemy_desc": "enemy",
-  "player_sprite_size": 64,
-  "enemy_sprite_size": 64
+  "frames_per_second": 3
 }
