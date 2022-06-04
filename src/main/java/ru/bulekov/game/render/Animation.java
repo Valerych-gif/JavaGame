@@ -39,10 +39,10 @@ public class Animation {
 
     private void getAnimationFromFile() {
 
-        Path animationDescriptionPath = Path.of(ASSET_PATH, gameObject.getGameObjectId(), "animations", animationSettings.getFileName());
+        Path animationDescriptionPath = Path.of(ASSET_PATH, gameObject.getDescription().getAsset(), gameObject.getGameObjectId(), "animations", animationSettings.getFileName());
         ImagesPack imagesPack = gameObject.getAssetsHandler().loadImagesPack(animationDescriptionPath);
 
-        File imageFile = Path.of(ASSET_PATH, gameObject.getGameObjectId(), "animations", imagesPack.getMeta().getImage()).toFile();
+        File imageFile = Path.of(ASSET_PATH, gameObject.getDescription().getAsset(), gameObject.getGameObjectId(), "animations", imagesPack.getMeta().getImage()).toFile();
         BufferedImage atlas = null;
         try {
             atlas = ImageIO.read(imageFile);

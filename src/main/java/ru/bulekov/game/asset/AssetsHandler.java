@@ -5,10 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import ru.bulekov.game.config.Settings;
 import ru.bulekov.game.core.Game;
-import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.gameobject.ObjectDescription;
 import ru.bulekov.game.map.description.MapDescription;
-import ru.bulekov.game.render.Animation;
+import ru.bulekov.game.map.terrain.Terrain;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +22,7 @@ public class AssetsHandler {
     private Settings settings;
 
     private final Map<String, ObjectDescription> objects = new HashMap<>();
+    private final Map<Integer, MapDescription> maps = new HashMap<>();
 
     public ImagesPack loadImagesPack(Path imagePath) {
         File imagePackFile = imagePath.toFile();
@@ -37,15 +37,15 @@ public class AssetsHandler {
         return imagesPack;
     }
 
-    public ObjectDescription getObject(String objectName) {
+    public ObjectDescription getCharacter(String objectName) {
         if (objects.get(objectName) == null) {
-            loadObject(objectName);
+            String objectDescriptionsDir = (String) settings.getValue("asset_path");
+            loadObject(objectName, objectDescriptionsDir + "/characters");
         }
         return objects.get(objectName);
     }
 
-    private void loadObject(String objectName) {
-        String objectDescriptionsDir = (String) settings.getValue("asset_path");
+    private void loadObject(String objectName, String objectDescriptionsDir) {
         File dir = new File(objectDescriptionsDir);
         File[] files = dir.listFiles();
 
@@ -60,7 +60,6 @@ public class AssetsHandler {
                 loadObjectFromFile(objectName, file);
             }
         }
-
     }
 
     private void loadObjectFromFile(String objectName, File file) {
@@ -77,11 +76,34 @@ public class AssetsHandler {
             System.exit(1);
         }
     }
+
     public void init(Game game) {
         this.settings = game.getSettings();
     }
 
-    public MapDescription getMap(int levelId) {
+    public MapDescription getMap(int levelId){
+        if (maps.get(levelId) == null) {
+            loadMap(levelId);
+        }
+        return maps.get(levelId);
+    }
+
+    public void loadMap(int levelId) {
+        ObjectMapper mapper = new ObjectMapper();
+        Path path = Path.of("data", "levels", String.valueOf(levelId), "description.json");
+        File fullFilePath = path.toFile();
+        try {
+            MapDescription description = mapper.readValue(fullFilePath, new TypeReference<>() {
+            });
+            maps.put(levelId, description);
+        } catch (IOException e) {
+            log.error("Can't load object from file {}", fullFilePath.getAbsolutePath());
+
+            System.exit(1);
+        }
+    }
+
+    public Terrain getTerrain(String name) {
         return null;
     }
 }

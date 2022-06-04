@@ -3,6 +3,7 @@ package ru.bulekov.game.map;
 import ru.bulekov.game.asset.AssetsHandler;
 import ru.bulekov.game.gameobject.GameObject;
 import ru.bulekov.game.map.description.*;
+import ru.bulekov.game.map.terrain.Terrain;
 import ru.bulekov.game.scene.Scene;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class GameMap {
     private Map<Integer, GameObjectDescription> gameObjectDescriptions;
     private Map<Integer, CharacterDescription> characterDescriptions;
 
-    private List<GameObject> terrains;
+    private List<Terrain> terrains;
     private List<GameObject> gameObjects;
     private List<GameObject> characters;
 
@@ -43,11 +44,11 @@ public class GameMap {
 
     private void loadAssets() {
         this.terrains = description.getTerrain().stream()
-                .map(i -> assetsHandler.getObject(terrainDescriptions.get(i).getName()))
+                .map(i -> assetsHandler.getTerrain(terrainDescriptions.get(i).getName()))
                 .collect(Collectors.toList());
     }
 
     public void update(float dt) {
-
+        terrains.forEach(terrain -> terrain.update(dt));
     }
 }

@@ -1,5 +1,6 @@
 {
   "object_name": "Player",
+  "asset": "characters",
   "width": 64,
   "height": 64,
   "states_list": [
